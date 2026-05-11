@@ -14,11 +14,11 @@ $EM_CONF['min'] = [
     'author' => 'Armin Vieweg',
     'author_email' => 'armin@v.ieweg.de',
     'state' => 'stable',
-    'version' => '3.1.2',
+    'version' => '3.1.3-dev',
     'constraints' => [
         'depends' => [
             'php' => '8.1.0-0.0.0',
-            'typo3' => '12.4.0-13.9.99',
+            'typo3' => '12.4.0-14.9.99',
         ],
         'conflicts' => [],
         'suggests' => [],
