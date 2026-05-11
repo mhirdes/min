@@ -38,7 +38,12 @@ class Tinysource
             return $source;
         }
         $this->conf = $frontendTypoScript->getSetupArray()['plugin.']['tx_min.']['tinysource.'] ?? [];
-        if (($this->conf['enable'] ?? false) && !($GLOBALS['TSFE']->config['config']['disableAllHeaderCode'] ?? false)) {
+        // In TYPO3 v14 TSFE->config is gone; "disableAllHeaderCode" lives in the
+        // frontend.typoscript request attribute (config array).
+        $disableAllHeaderCode = (bool)($frontendTypoScript->getConfigArray()['disableAllHeaderCode']
+            ?? $GLOBALS['TSFE']->config['config']['disableAllHeaderCode']
+            ?? false);
+        if (($this->conf['enable'] ?? false) && !$disableAllHeaderCode) {
             $headOffset = strpos($source, '<head');
             $headEndOffset = strpos($source, '>', $headOffset ?: 0);
             $closingHeadOffset = strpos($source, '</head>');

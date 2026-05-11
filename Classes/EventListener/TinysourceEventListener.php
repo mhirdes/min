@@ -23,6 +23,16 @@ class TinysourceEventListener
 
     public function __invoke(AfterCacheableContentIsGeneratedEvent $event): void
     {
+        // TYPO3 v14 removed AfterCacheableContentIsGeneratedEvent::getController(),
+        // content is now accessed via getContent()/setContent().
+        if (method_exists($event, 'getContent')) {
+            $event->setContent(
+                $this->tinysource->tinysource($event->getContent(), $event->getRequest())
+            );
+
+            return;
+        }
+
         $event->getController()->content = $this->tinysource->tinysource(
             $event->getController()->content,
             $event->getRequest()
